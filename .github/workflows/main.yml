@@ -12,28 +12,28 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    - name: Install packages
-      run: |
-        sudo apt update
-        sudo DEBIAN_FRONTEND=noninteractive apt install -y \
-          build-essential bc zip curl git \
-          libncurses5-dev flex bison \
-          python-is-python3 ca-certificates unzip ccache
+    steps:
+      - name: Install packages
+        run: |
+          sudo apt update
+          sudo DEBIAN_FRONTEND=noninteractive apt install -y \
+            build-essential bc zip curl git \
+            libncurses5-dev flex bison \
+            python-is-python3 ca-certificates unzip ccache
 
-    - name: Checkout repo
-      uses: actions/checkout@v3.5.3
-      with:
-        fetch-depth: 1
-        submodules: recursive
+      - name: Checkout repo
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 1
+          submodules: recursive
 
-    - name: Make kernel
-      run: |
-        echo "Building kernel"
-        ./build_kernel.sh
+      - name: Make kernel
+        run: |
+          echo "Building kernel"
+          ./build_kernel.sh
         
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: test
-        path: arch/arm64/boot/Image
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test
+          path: arch/arm64/boot/Image
